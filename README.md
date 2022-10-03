@@ -29,8 +29,8 @@ fastqc -o fastqc mate_pairs2.fastq
 multiqc -o multiqc fastqc
 ```
 
-![multiqc_untrimmed1](Pictures/multiqc_untrimmed1.png)
-![multiqc_untrimmed2](Pictures/multiqc_untrimmed2.png)
+![multiqc_untrimmed1](images/multiqc_untrimmed1.png)
+![multiqc_untrimmed2](images/multiqc_untrimmed2.png)
 
 ## Подрезаем чтения по качеству с помощью platanus
 ```
@@ -57,8 +57,8 @@ fastqc -o fastqc_trimmed mate_pairs2.fastq.int_trimmed
 multiqc -o multiqc_trimmed fastqc_trimmed
 ```
 
-![multiqc_trimmed1](Pictures/multiqc_trimmed1.png)
-![multiqc_trimmed2](Pictures/multiqc_trimmed2.png)
+![multiqc_trimmed1](images/multiqc_trimmed1.png)
+![multiqc_trimmed2](images/multiqc_trimmed2.png)
 
 ## Собираем контиги из подрезанных чтений с помощью программы ```platanus assemble```
 ```
