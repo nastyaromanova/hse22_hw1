@@ -1,0 +1,58 @@
+Platanus version: 1.2.4
+platanus gap_close -o Poil -c Poil_scaffold.fa -IP1 paired_end1.fastq.trimmed paired_end2.fastq.trimmed -OP2 mate_pairs1.fastq.int_trimmed mate_pairs2.fastq.int_trimmed 
+
+K=32, making hash table...
+[PAIR_LIBRARY 1]
+mapping reads...
+TOTAL_PAIR = 4813657
+MAPPED_IN_SAME_CONTIG = 4560396 (0.947387)
+estimating insert-size...
+PEAK = 244
+LOWER_LIMIT (permissible range to estimate AVE_INS)= 61
+UPPER_LIMIT (permissible range to estimate AVE_INS)= 427
+AVE_INS = 247
+SD_INS = 39
+mapping reads that cover small gaps...
+[PAIR_LIBRARY 2]
+mapping reads...
+TOTAL_PAIR = 856011
+MAPPED_IN_SAME_CONTIG = 641830 (0.749792)
+estimating insert-size...
+PEAK = 2728
+LOWER_LIMIT (permissible range to estimate AVE_INS)= 682
+UPPER_LIMIT (permissible range to estimate AVE_INS)= 4774
+AVE_INS = 3057
+SD_INS = 894
+mapping reads that cover small gaps...
+making hash table of gaps...
+making consensus sequences to close small gaps...
+NUM_GAP=74
+NUM_CLOSED_GAP=37
+[PAIR_LIBRARY 1]
+saving reads covering gaps...
+loading reads covering gaps...
+assembling localized reads...
+NUM_GAPS = 37
+NUM_NOT_CLOSED_GAPS (too many reads are mapped comapering to coverage)= 1
+NUM_CLOSED_GAPS_USING_DE_BRUIJN = 5
+NUM_CLOSED_GAPS_USING_OVERLAP_LAYOUT_CONSENSUS = 2
+[PAIR_LIBRARY 2]
+saving reads covering gaps...
+loading reads covering gaps...
+assembling localized reads...
+NUM_GAPS = 30
+NUM_NOT_CLOSED_GAPS (too many reads are mapped comapering to coverage)= 0
+NUM_CLOSED_GAPS_USING_DE_BRUIJN = 18
+NUM_CLOSED_GAPS_USING_OVERLAP_LAYOUT_CONSENSUS = 1
+[ALL LIBRARY]
+assembling localized reads...
+NUM_GAPS = 11
+NUM_NOT_CLOSED_GAPS (too many reads are mapped comapering to coverage)= 1
+NUM_CLOSED_GAPS_USING_DE_BRUIJN = 0
+NUM_CLOSED_GAPS_USING_OVERLAP_LAYOUT_CONSENSUS = 0
+TOTAL_NUM_CLOSED_GAPS = 63
+gap_close completed!!
+
+#### PROCESS INFORMATION ####
+VmPeak:           0.312 GByte
+VmHWM:            0.291 GByte
