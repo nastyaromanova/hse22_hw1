@@ -1,5 +1,7 @@
 # hse22_hw1
 
+Романова Анастасия, группа 2
+# Основное задание
 ## Создание символических ссылок на каждый из файлов
 ``` 
 ln -s /usr/share/data-minor-bioinf/assembly/oil_R1.fastq 
@@ -102,3 +104,137 @@ scp -P 5222 aaromanova_10@92.242.58.92:~/Poil_lib2_insFreq.tsv ~/hse22_hw1/other
 scp -P 5222 aaromanova_10@92.242.58.92:~/Poil_scaffoldComponent.tsv ~/hse22_hw1/other/Poil_scaffoldComponent.tsv
 ```
 
+## Анализ данных в notebook
+
+Функция для загрузки данных из файла
+```
+def load_info(filename):
+    data = ''
+    with open(filename, 'r') as file:
+        data = file.read()
+    
+    ''' Перед контигом / скаффолдом идет строка вида '>.+', поэтому делаю split по этому выражению '''
+    
+    data = re.split('>.+', data)
+    splited_data = list(map(lambda i: i.replace('\n', ''), data))
+    
+    while '' in splited_data:
+        splited_data.remove('')
+    return splited_data
+```
+
+Функция для получения информации после анализа контигов / скаффолдов
+```
+def get_info(data):
+    total_length, max_length, max_data = 0, 0, ''
+    lengths = list()
+    for i in data:
+        length = len(i)
+        total_length += length
+        lengths.append(length)
+        if length > max_length:
+            max_length = length
+            max_data = i
+            
+    total_cnt = len(data)
+
+    lengths.sort()
+    sum_len, n50 = 0, lengths[0]
+    for length in lengths:
+        sum_len += length
+        if total_length <= 2 * sum_len:
+            n50 = length
+            break
+    
+    print(f'Количество: {total_cnt}')
+    print(f'Длина: {total_length}')
+    print(f'Максимальная длина: {max_length}')
+    print(f'N50: {n50}')
+    return max_data
+```
+
+Функция для получения информации о гэпах
+```
+def get_gap_info(scaffolds):
+    max_length_scaffold = scaffolds[0]
+    for current_scaffold in scaffolds:
+        if len(current_scaffold) > len(max_length_scaffold):
+            max_length_scaffold = current_scaffold
+    
+    gaps = re.findall('N+', max_length_scaffold)
+    total_length = sum([len(i) for i in gaps])
+    print(f'Количество гэпов в скаффолде максимальной длины: {len(gaps)}')
+    print(f'Общая длина гэпов: {total_length}')
+    return max_length_scaffold
+```
+
+## Результаты анализа контигов, скаффолдов и гэпов
+```
+Анализ полученных контигов
+Количество: 620
+Длина: 3926044
+Максимальная длина: 158930
+N50: 49854
+```
+
+```
+Анализ полученных скаффолдов
+Количество: 70
+Длина: 3876216
+Максимальная длина: 3832138
+N50: 3832138
+```
+
+```
+Анализ самого длинного скаффолда до уменьшения количества гэпов
+Количество гэпов в скаффолде максимальной длины: 61
+Общая длина гэпов: 7642
+
+Анализ самого длинного скаффолда после уменьшения количества гэпов
+Количество гэпов в скаффолде максимальной длины: 10
+Общая длина гэпов: 3136
+```
+
+# Бонусное задание
+
+## Повторяем все описанное выше, но изменяем порядок у числа случайных чтений (на один меньше)
+```
+seqtk sample -s 603 oil_R1.fastq 500000 > paired_end1.fastq
+seqtk sample -s 603 oil_R2.fastq 500000 > paired_end2.fastq
+seqtk sample -s 603 oilMP_S4_L001_R1_001.fastq 150000 > mate_pairs1.fastq
+seqtk sample -s 603 oilMP_S4_L001_R2_001.fastq 150000 > mate_pairs2.fastq
+```
+
+## В папку ```bonus``` вытаскиваем только нужные для анализа файлы
+```
+scp -P 5222 aaromanova_10@92.242.58.92:~/Poil_contig.fa ~/hse22_hw1/bonus/Poil_contig.fa
+scp -P 5222 aaromanova_10@92.242.58.92:~/Poil_scaffold.fa ~/hse22_hw1/bonus/Poil_scaffold.fa
+scp -P 5222 aaromanova_10@92.242.58.92:~/Poil_gapClosed.fa ~/hse22_hw1/bonus/Poil_gapClosed.fa
+```
+
+## Результаты анализа контигов, скаффолдов и гэпов (используем те же функции, что и в основном задании)
+```
+Анализ полученных контигов
+Количество: 3453
+Длина: 3917192
+Максимальная длина: 20373
+N50: 3898
+```
+
+```
+Анализ полученных скаффолдов
+Количество: 461
+Длина: 3862082
+Максимальная длина: 814747
+N50: 569414
+```
+
+```
+Анализ самого длинного скаффолда до уменьшения количества гэпов
+Количество гэпов в скаффолде максимальной длины: 321
+Общая длина гэпов: 14848
+
+Анализ самого длинного скаффолда после уменьшения количества гэпов
+Количество гэпов в скаффолде максимальной длины: 26
+Общая длина гэпов: 6612
+```
